@@ -1,0 +1,27 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway-test
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: false
+
+# Eureka Client Configuration - Disabled for tests
+eureka:
+  client:
+    enabled: false
+    register-with-eureka: false
+    fetch-registry: false
+
+# JWT Configuration for Testing
+jwt:
+  secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+
+# Logging Configuration
+logging:
+  level:
+    com.revhire.gateway: DEBUG

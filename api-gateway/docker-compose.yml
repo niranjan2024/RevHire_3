@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  api-gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: revhire-api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - JWT_SECRET=${JWT_SECRET:-404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+    depends_on:
+      - eureka-server
+    networks:
+      - revhire-network
+    restart: unless-stopped
+
+  eureka-server:
+    image: revhire/eureka-server:latest
+    container_name: revhire-eureka-server
+    ports:
+      - "8761:8761"
+    networks:
+      - revhire-network
+    restart: unless-stopped
+
+networks:
+  revhire-network:
+    driver: bridge
